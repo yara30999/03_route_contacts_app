@@ -15,16 +15,16 @@ ThemeData getDarkTheme() {
 
     // divider theme
     dividerTheme: const DividerThemeData(
-      color: ColorsManager.black,
+      color: ColorsManager.gold,
       thickness: 2,
     ),
 
     // text selection theme
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: ColorsManager.red,
-      selectionColor: ColorsManager.red.withOpacity(0.5),
+      cursorColor: ColorsManager.gold,
+      selectionColor: ColorsManager.black.withOpacity(0.5),
       // Change the handle to blue for the text form field ;)
-      selectionHandleColor: ColorsManager.red,
+      selectionHandleColor: ColorsManager.gold,
     ),
 
     // text form field theme
@@ -74,7 +74,7 @@ ThemeData getDarkTheme() {
         foregroundColor: ColorsManager.darkBlue,
         backgroundColor: ColorsManager.gold,
         textStyle: Styles.style20Bold(),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
   );
