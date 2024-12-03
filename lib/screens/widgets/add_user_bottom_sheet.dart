@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import '../../models/user_moder.dart';
 import '../../resourses/assets_manager.dart';
 import '../../resourses/colors_manager.dart';
 import '../../resourses/styles_manager.dart';
@@ -13,7 +16,33 @@ class AddUserBottomSheet extends StatefulWidget {
 }
 
 class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  void enterUser() {
+    UserModer userModer = UserModer(
+        name: _controller1.text.trim(),
+        email: _controller1.text.trim(),
+        number: _controller1.text.trim(),
+        img: _image);
+    Navigator.pop(context, userModer);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +55,80 @@ class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const InfoDisplay(),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _pickImage();
+                },
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: ColorsManager.gold,
+                      width: 2,
+                    ),
+                  ),
+                  child: _image == null
+                      ? LottieBuilder.asset(
+                          JsonAssets.imagePicker,
+                          fit: BoxFit.cover,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(24),
+                          child: Image.file(
+                            _image!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _controller1.text.isEmpty ? 'User Name' : _controller1.text,
+                    style: Styles.style16Medium(),
+                  ),
+                  const CustomDivider(),
+                  Text(
+                    _controller2.text.isEmpty
+                        ? 'example@email.com'
+                        : _controller2.text,
+                    style: Styles.style16Medium(),
+                  ),
+                  const CustomDivider(),
+                  Text(
+                    _controller3.text.isEmpty
+                        ? '+200000000000'
+                        : _controller3.text,
+                    style: Styles.style16Medium(),
+                  ),
+                ],
+              )
+            ],
+          ),
           const SizedBox(height: 16),
           TextField(
-            controller: _controller,
+            controller: _controller1,
             decoration: const InputDecoration(
               labelText: "Enter User Name ",
             ),
           ),
           const SizedBox(height: 8),
           TextField(
-            controller: _controller,
+            controller: _controller2,
             decoration: const InputDecoration(
               labelText: "Enter User Email ",
             ),
           ),
           const SizedBox(height: 8),
           TextField(
-            controller: _controller,
+            controller: _controller3,
             decoration: const InputDecoration(
               labelText: "Enter User phone ",
             ),
@@ -54,7 +139,7 @@ class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
             height: 60,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, _controller.text.trim());
+                enterUser();
               },
               child: const Text("Enter user"),
             ),
@@ -62,53 +147,6 @@ class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
           const SizedBox(height: 16),
         ],
       ),
-    );
-  }
-}
-
-class InfoDisplay extends StatelessWidget {
-  const InfoDisplay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 150,
-          height: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: ColorsManager.gold,
-              width: 2,
-            ),
-          ),
-          child: LottieBuilder.asset(JsonAssets.imagePicker),
-        ),
-        const SizedBox(width: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'User Name',
-              style: Styles.style16Medium(),
-            ),
-            const CustomDivider(),
-            Text(
-              'example@email.com',
-              style: Styles.style16Medium(),
-            ),
-            const CustomDivider(),
-            Text(
-              '+200000000000',
-              style: Styles.style16Medium(),
-            ),
-          ],
-        )
-      ],
     );
   }
 }

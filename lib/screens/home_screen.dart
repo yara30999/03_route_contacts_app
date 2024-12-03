@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../models/user_moder.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/colors_manager.dart';
 import 'widgets/add_user_bottom_sheet.dart';
 import 'widgets/empty_state.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  Future<String?> _addUser(BuildContext context) {
-    return showModalBottomSheet<String>(
-      backgroundColor: ColorsManager.darkBlue,
-      barrierColor: ColorsManager.black.withOpacity(0.7),
-      isScrollControlled: true,
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<UserModer> items = [];
+
+  Future<void> _addUser(BuildContext context) async {
+    final result = await showModalBottomSheet<UserModer?>(
       context: context,
+      backgroundColor: ColorsManager.darkBlue,
+      barrierColor: ColorsManager.black.withOpacity(0.8),
+      isScrollControlled: true,
       builder: (context) {
         return const AddUserBottomSheet();
       },
     );
+
+    if (result != null) {
+      setState(() {
+        items.add(result);
+      });
+    }
   }
 
   @override
@@ -31,9 +45,13 @@ class HomeScreen extends StatelessWidget {
           child: SvgPicture.asset(SvgAssets.routeIcon),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: EmptyState(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: items.isNotEmpty
+            ? const Expanded(
+                child: Center(child: Text("you added some items :) ")),
+              )
+            : const EmptyState(),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
