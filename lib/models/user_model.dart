@@ -1,10 +1,10 @@
 import 'dart:io';
 
-class UserModer {
+class UserModel {
   final String name, email, number;
   final File? img;
 
-  UserModer(
+  UserModel(
       {required this.name,
       required this.email,
       required this.number,

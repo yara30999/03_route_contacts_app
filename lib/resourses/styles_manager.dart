@@ -11,7 +11,16 @@ abstract class Styles {
       fontFamily: FontConstants.fontInter,
       fontSize: 10,
       fontWeight: FontWeight.w400,
-      color: ColorsManager.gold,
+      color: ColorsManager.darkBlue,
+    );
+  }
+
+  static TextStyle style14Medium() {
+    return const TextStyle(
+      fontFamily: FontConstants.fontInter,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: ColorsManager.darkBlue,
     );
   }
 

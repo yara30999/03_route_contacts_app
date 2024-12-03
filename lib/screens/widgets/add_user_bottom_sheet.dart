@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import '../../models/user_moder.dart';
+import '../../models/user_model.dart';
 import '../../resourses/assets_manager.dart';
 import '../../resourses/colors_manager.dart';
 import '../../resourses/styles_manager.dart';
@@ -36,10 +36,10 @@ class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
   }
 
   void enterUser() {
-    UserModer userModer = UserModer(
+    UserModel userModer = UserModel(
         name: _controller1.text.trim(),
-        email: _controller1.text.trim(),
-        number: _controller1.text.trim(),
+        email: _controller2.text.trim(),
+        number: _controller3.text.trim(),
         img: _image);
     Navigator.pop(context, userModer);
   }
