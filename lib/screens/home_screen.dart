@@ -52,6 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: List.generate(items.length, (index) {
                   return ContactCard(
                     userModer: items[index],
+                    onDelete: () {
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
                   );
                 }),
               ),
@@ -69,9 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class ContactCard extends StatelessWidget {
   final UserModel userModer;
+  final VoidCallback onDelete;
   const ContactCard({
     super.key,
     required this.userModer,
+    required this.onDelete,
   });
 
   @override
@@ -107,7 +114,9 @@ class ContactCard extends StatelessWidget {
                       label: userModer.number,
                       svgSize: 25,
                     ),
-                    const RedDeleteButton()
+                    RedDeleteButton(
+                      onDelete: onDelete,
+                    )
                   ],
                 ),
               )),
@@ -118,8 +127,10 @@ class ContactCard extends StatelessWidget {
 }
 
 class RedDeleteButton extends StatelessWidget {
+  final VoidCallback onDelete;
   const RedDeleteButton({
     super.key,
+    required this.onDelete,
   });
 
   @override
@@ -136,7 +147,7 @@ class RedDeleteButton extends StatelessWidget {
             ),
             backgroundColor: const WidgetStatePropertyAll(ColorsManager.red),
           ),
-          onPressed: () {},
+          onPressed: onDelete,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
