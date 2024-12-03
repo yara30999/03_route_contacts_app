@@ -16,5 +16,6 @@ class SvgAssets {
 
 class JsonAssets {
   static const String imagePicker = '$jsonPath/image_picker.json';
-  static const String emptyList = '$jsonPath/image_picker.json';
+  static const String emptyList = '$jsonPath/empty_list.json';
+  static const String empty1 = '$jsonPath/empty_1.json';
 }

@@ -8,6 +8,11 @@ ThemeData getDarkTheme() {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: ColorsManager.darkBlue,
 
+    //app bar theme
+    appBarTheme: const AppBarTheme(
+      color: ColorsManager.darkBlue,
+    ),
+
     // divider theme
     dividerTheme: const DividerThemeData(
       color: ColorsManager.black,

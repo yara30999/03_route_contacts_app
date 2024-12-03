@@ -71,6 +71,7 @@ flutter:
     - assets/svg/route.svg
     - assets/json/empty_list.json
     - assets/json/image_picker.json
+    - assets/json/empty_1.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
