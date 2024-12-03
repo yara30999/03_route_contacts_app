@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/splash_screen.dart';
 
 class Routes {
   static const String splashRoute = "/";
@@ -8,8 +9,8 @@ class Routes {
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case Routes.splashRoute:
-      //   return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case Routes.splashRoute:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       // case Routes.homeRoute:
       //   return MaterialPageRoute(builder: (_) => const HomeScreen());
       default:
