@@ -177,8 +177,8 @@ class IconTextRow extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         const SizedBox(width: 10),
-        FittedBox(
-          fit: BoxFit.scaleDown,
+        Flexible(
+          fit: FlexFit.tight,
           child: Text(
             label,
             style: Styles.style10Regular(),
