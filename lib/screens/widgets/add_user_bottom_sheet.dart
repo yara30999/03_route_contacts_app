@@ -41,7 +41,14 @@ class _AddUserBottomSheetState extends State<AddUserBottomSheet> {
         email: _controller2.text.trim(),
         number: _controller3.text.trim(),
         img: _image);
-    Navigator.pop(context, userModer);
+    if (userModer.img == null ||
+        userModer.name.isEmpty == true ||
+        userModer.number.isEmpty == true ||
+        userModer.email.isEmpty == true) {
+      Navigator.pop(context);
+    } else {
+      Navigator.pop(context, userModer);
+    }
   }
 
   @override
