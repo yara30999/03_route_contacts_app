@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/contacts_list.dart';
+import '../provider/contacts_provider.dart';
 import 'contact_card.dart';
 
 class ListState extends StatelessWidget {
@@ -13,9 +13,9 @@ class ListState extends StatelessWidget {
     return SingleChildScrollView(
       child: Wrap(
         children: List.generate(
-            Provider.of<ContactsListProvider>(context).items.length, (index) {
+            Provider.of<ContactsProvider>(context).items.length, (index) {
           return ContactCard(
-            userModer: Provider.of<ContactsListProvider>(context).items[index],
+            userModer: Provider.of<ContactsProvider>(context).items[index],
           );
         }),
       ),

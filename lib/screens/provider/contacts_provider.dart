@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../models/user_model.dart';
 
-class ContactsListProvider extends ChangeNotifier {
-  List<UserModel> _items = [];
+class ContactsProvider extends ChangeNotifier {
+  final List<UserModel> _items = [];
 
   List<UserModel> get items => _items;
 
@@ -13,6 +13,13 @@ class ContactsListProvider extends ChangeNotifier {
 
   void deleteUser(UserModel user) {
     _items.remove(user);
+    notifyListeners();
+  }
+
+  void deleteLast() {
+    if (_items.isNotEmpty) {
+      _items.removeLast();
+    }
     notifyListeners();
   }
 }

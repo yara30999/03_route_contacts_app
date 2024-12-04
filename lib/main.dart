@@ -4,7 +4,7 @@ import 'resourses/routes_manager.dart';
 import 'resourses/theme_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/provider/contacts_list.dart';
+import 'screens/provider/contacts_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ContactsListProvider>(
+    return ChangeNotifierProvider<ContactsProvider>(
       create: (BuildContext context) {
-        return ContactsListProvider();
+        return ContactsProvider();
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

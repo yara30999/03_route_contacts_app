@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../models/user_model.dart';
 import '../../resourses/assets_manager.dart';
 import '../../resourses/colors_manager.dart';
-import '../provider/contacts_list.dart';
+import '../provider/contacts_provider.dart';
 import 'icon_text_row.dart';
 import 'image_with_bottom_left_name.dart';
 import 'red_delete_button.dart';
@@ -50,8 +50,7 @@ class ContactCard extends StatelessWidget {
                     ),
                     RedDeleteButton(
                       onDelete: () {
-                        Provider.of<ContactsListProvider>(context,
-                                listen: false)
+                        Provider.of<ContactsProvider>(context, listen: false)
                             .deleteUser(userModer);
                       },
                     )
