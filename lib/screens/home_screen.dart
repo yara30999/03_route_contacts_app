@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import '../models/user_model.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/colors_manager.dart';
 import '../resourses/styles_manager.dart';
+import 'provider/contacts_list.dart';
 import 'widgets/add_user_bottom_sheet.dart';
 import 'widgets/empty_state.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<UserModel> items = [];
 
   Future<void> _addUser(BuildContext context) async {
     final result = await showModalBottomSheet<UserModel?>(
@@ -29,9 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (result != null) {
-      setState(() {
-        items.add(result);
-      });
+      if (context.mounted) {
+        Provider.of<ContactsListProvider>(context, listen: false)
+            .addUser(result);
+      }
     }
   }
 
@@ -46,22 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SvgPicture.asset(SvgAssets.routeIcon),
         ),
       ),
-      body: items.isNotEmpty
-          ? SingleChildScrollView(
-              child: Wrap(
-                children: List.generate(items.length, (index) {
-                  return ContactCard(
-                    userModer: items[index],
-                    onDelete: () {
-                      setState(() {
-                        items.removeAt(index);
-                      });
-                    },
-                  );
-                }),
-              ),
-            )
-          : const EmptyState(),
+      body: Provider.of<ContactsListProvider>(context).items.isEmpty
+          ? const EmptyState()
+          : const ListState(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
@@ -72,13 +55,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class ListState extends StatelessWidget {
+  const ListState({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Wrap(
+        children: List.generate(
+            Provider.of<ContactsListProvider>(context).items.length, (index) {
+          return ContactCard(
+            userModer: Provider.of<ContactsListProvider>(context).items[index],
+          );
+        }),
+      ),
+    );
+  }
+}
+
 class ContactCard extends StatelessWidget {
   final UserModel userModer;
-  final VoidCallback onDelete;
   const ContactCard({
     super.key,
     required this.userModer,
-    required this.onDelete,
   });
 
   @override
@@ -115,7 +116,11 @@ class ContactCard extends StatelessWidget {
                       svgSize: 25,
                     ),
                     RedDeleteButton(
-                      onDelete: onDelete,
+                      onDelete: () {
+                        Provider.of<ContactsListProvider>(context,
+                                listen: false)
+                            .deleteUser(userModer);
+                      },
                     )
                   ],
                 ),
